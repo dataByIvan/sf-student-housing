@@ -10,458 +10,82 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #18181f;
-    --border: #2a2a35;
-    --text: #f0f0f5;
-    --muted: #6b6b80;
-    --accent: #c8f060;
-    --accent2: #60c8f0;
-    --danger: #f06060;
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface2: #f5f6f8;
+    --border: #e0e3e9;
+    --text: #1a1d26;
+    --muted: #8890a4;
+    --accent: #2d7a3a;
+    --accent2: #1a6fa8;
+    --danger: #c0392b;
     --sidebar-w: 340px;
-
-    /* choropleth scale: dark green (best) → light yellow (worst) */
-    --c0: #1a4a1a;
-    --c1: #2d6e2d;
-    --c2: #4a9e2a;
-    --c3: #7ec832;
-    --c4: #c8f060;
-    --c5: #f0d860;
-    --c6: #f0a840;
-    --c7: #f07030;
-    --c8: #e04020;
-    --c9: #b01010;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Mono', monospace;
-    background: var(--bg);
-    color: var(--text);
-    height: 100vh;
-    display: flex;
-    overflow: hidden;
-  }
-
-  /* ── SIDEBAR ── */
-  #sidebar {
-    width: var(--sidebar-w);
-    min-width: var(--sidebar-w);
-    height: 100vh;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 100;
-  }
-
-  #sidebar-header {
-    padding: 24px 20px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .logo-line {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 20px;
-    color: var(--accent);
-    letter-spacing: -0.5px;
-    line-height: 1;
-  }
-
-  .sub-line {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  #controls {
-    padding: 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .control-group label {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
-  select {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    padding: 10px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b80' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    transition: border-color 0.15s;
-  }
-  select:focus { outline: none; border-color: var(--accent); }
-
-  .slider-row {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .slider-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .slider-label-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .slider-name {
-    font-size: 11px;
-    color: var(--text);
-    letter-spacing: 0.5px;
-  }
-
-  .slider-val {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--accent);
-    min-width: 36px;
-    text-align: right;
-  }
-
-  input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 4px;
-    border-radius: 2px;
-    background: var(--border);
-    cursor: pointer;
-  }
-
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    cursor: pointer;
-    transition: transform 0.1s;
-  }
-
-  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-
-  #rent-slider { accent-color: var(--accent); }
-  #commute-slider { accent-color: var(--accent2); }
+  body { font-family: 'DM Mono', monospace; background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
+  #sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); height: 100vh; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 100; box-shadow: 2px 0 12px rgba(0,0,0,0.06); }
+  #sidebar-header { padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
+  .logo-line { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 19px; color: var(--accent); letter-spacing: -0.5px; line-height: 1; }
+  .sub-line { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+  #controls { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 16px; }
+  .control-group label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  select { width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 12px; padding: 9px 12px; border-radius: 6px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238890a4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; transition: border-color 0.15s; }
+  select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(45,122,58,0.1); }
+  .slider-row { display: flex; flex-direction: column; gap: 10px; }
+  .slider-item { display: flex; flex-direction: column; gap: 5px; }
+  .slider-label-row { display: flex; justify-content: space-between; align-items: center; }
+  .slider-name { font-size: 11px; color: var(--text); }
+  .slider-val { font-size: 12px; font-weight: 500; color: var(--accent); min-width: 36px; text-align: right; }
   .slider-val.commute { color: var(--accent2); }
-
-  .weight-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--border);
-    overflow: hidden;
-    margin-top: 4px;
-    display: flex;
-  }
-
-  .weight-bar-rent {
-    height: 100%;
-    background: var(--accent);
-    transition: width 0.2s ease;
-  }
-
-  .weight-bar-commute {
-    height: 100%;
-    background: var(--accent2);
-    flex: 1;
-  }
-
-  /* ── RANKINGS ── */
-  #rankings-header {
-    padding: 16px 20px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  #rankings-header span {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  #rankings-header .count {
-    font-size: 11px;
-    color: var(--accent);
-  }
-
-  #rankings {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 12px 12px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .rank-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.1s;
-    border: 1px solid transparent;
-  }
-
+  input[type=range] { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; background: var(--border); cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--accent); cursor: pointer; transition: transform 0.1s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  .weight-bar { height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; margin-top: 2px; display: flex; }
+  .weight-bar-rent { height: 100%; background: var(--accent); transition: width 0.2s ease; }
+  .weight-bar-commute { height: 100%; background: var(--accent2); flex: 1; }
+  #rankings-header { padding: 14px 20px 8px; display: flex; justify-content: space-between; align-items: center; }
+  #rankings-header span { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  #rankings-header .count { font-size: 11px; color: var(--accent); }
+  #rankings { flex: 1; overflow-y: auto; padding: 0 12px 12px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .rank-card { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 6px; cursor: pointer; transition: background 0.1s; border: 1px solid transparent; }
   .rank-card:hover { background: var(--surface2); border-color: var(--border); }
-  .rank-card.active { background: var(--surface2); border-color: var(--accent); }
-
-  .rank-num {
-    font-size: 10px;
-    color: var(--muted);
-    min-width: 20px;
-    text-align: right;
-  }
-
-  .rank-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
+  .rank-card.active { background: #edf7ef; border-color: var(--accent); }
+  .rank-num { font-size: 10px; color: var(--muted); min-width: 20px; text-align: right; }
+  .rank-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .rank-info { flex: 1; min-width: 0; }
-
-  .rank-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text);
-  }
-
-  .rank-meta {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 1px;
-  }
-
-  .rank-score {
-    font-size: 11px;
-    color: var(--muted);
-    text-align: right;
-  }
-
-  /* ── MAP ── */
-  #map-container {
-    flex: 1;
-    position: relative;
-  }
-
-  #map {
-    width: 100%;
-    height: 100%;
-    background: var(--bg);
-  }
-
-  /* Override Leaflet defaults for dark theme */
-  .leaflet-container { background: #0a0a0f; }
-  .leaflet-tile { filter: brightness(0.15) saturate(0.3); }
-
-  /* Tooltip */
-  .leaflet-tooltip {
-    background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    color: var(--text) !important;
-    font-family: 'DM Mono', monospace !important;
-    font-size: 12px !important;
-    border-radius: 6px !important;
-    padding: 8px 12px !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
-  }
-
-  .leaflet-tooltip-left::before,
-  .leaflet-tooltip-right::before { border: none !important; }
-
-  /* Popup */
-  .leaflet-popup-content-wrapper {
-    background: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6) !important;
-    padding: 0 !important;
-  }
-
+  .rank-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+  .rank-meta { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .rank-score { font-size: 11px; color: var(--muted); text-align: right; }
+  #map-container { flex: 1; position: relative; }
+  #map { width: 100%; height: 100%; }
+  .leaflet-container { background: #e8ecf0; }
+  .leaflet-tile { filter: brightness(0.92) saturate(0.6); }
+  .leaflet-tooltip { background: var(--surface) !important; border: 1px solid var(--border) !important; color: var(--text) !important; font-family: 'DM Mono', monospace !important; font-size: 12px !important; border-radius: 6px !important; padding: 7px 11px !important; box-shadow: 0 3px 12px rgba(0,0,0,0.12) !important; }
+  .leaflet-tooltip-left::before, .leaflet-tooltip-right::before { border: none !important; }
+  .leaflet-popup-content-wrapper { background: var(--surface) !important; border: 1px solid var(--border) !important; border-radius: 10px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.14) !important; padding: 0 !important; }
   .leaflet-popup-tip { background: var(--surface) !important; }
   .leaflet-popup-close-button { color: var(--muted) !important; top: 10px !important; right: 12px !important; font-size: 18px !important; }
-
-  .popup-inner {
-    padding: 18px 20px;
-    min-width: 220px;
-  }
-
-  .popup-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 12px;
-    padding-right: 20px;
-  }
-
-  .popup-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .popup-stat {
-    background: var(--surface2);
-    border-radius: 6px;
-    padding: 8px 10px;
-  }
-
-  .popup-stat-label {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 3px;
-  }
-
-  .popup-stat-val {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
+  .popup-inner { padding: 18px 20px; min-width: 220px; }
+  .popup-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-right: 20px; }
+  .popup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .popup-stat { background: var(--surface2); border-radius: 6px; padding: 8px 10px; border: 1px solid var(--border); }
+  .popup-stat-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .popup-stat-val { font-size: 14px; font-weight: 500; color: var(--text); }
   .popup-stat-val.highlight { color: var(--accent); }
-
-  .popup-rank {
-    margin-top: 10px;
-    padding: 6px 10px;
-    background: var(--surface2);
-    border-radius: 6px;
-    font-size: 11px;
-    color: var(--muted);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .popup-rank span { color: var(--accent); }
-
-  /* Legend */
-  #legend {
-    position: absolute;
-    bottom: 24px;
-    right: 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    z-index: 500;
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-
-  #legend .leg-title {
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-    letter-spacing: 2px;
-  }
-
-  .leg-bar {
-    width: 160px;
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(to right,
-      #1a4a1a, #2d6e2d, #4a9e2a, #7ec832,
-      #c8f060, #f0d860, #f0a840, #f07030, #e04020, #b01010
-    );
-    margin-bottom: 4px;
-  }
-
-  .leg-labels {
-    display: flex;
-    justify-content: space-between;
-    color: var(--muted);
-  }
-
-  /* Loading overlay */
-  #loading {
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    gap: 16px;
-    transition: opacity 0.4s;
-  }
-
+  .popup-rank { margin-top: 8px; padding: 6px 10px; background: #edf7ef; border-radius: 6px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; border: 1px solid #c8e6cc; }
+  .popup-rank span { color: var(--accent); font-weight: 600; }
+  .school-tip-label { background: white; border: 2px solid var(--accent); border-radius: 5px; padding: 3px 8px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--accent); box-shadow: 0 2px 6px rgba(0,0,0,0.15); white-space: nowrap; }
+  #legend { position: absolute; bottom: 24px; right: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; z-index: 500; font-size: 10px; letter-spacing: 1px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  #legend .leg-title { text-transform: uppercase; color: var(--muted); margin-bottom: 8px; letter-spacing: 2px; }
+  .leg-bar { width: 160px; height: 8px; border-radius: 4px; background: linear-gradient(to right, #1a5c1a, #2d8a2d, #4ab040, #7ec832, #c8f060, #f0d840, #f0a830, #f07020, #e03010, #b00808); margin-bottom: 4px; }
+  .leg-labels { display: flex; justify-content: space-between; color: var(--muted); }
+  #loading { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; gap: 16px; transition: opacity 0.4s; }
   #loading.hidden { opacity: 0; pointer-events: none; }
-
-  .load-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--accent);
-  }
-
-  .load-sub {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .load-bar {
-    width: 200px;
-    height: 2px;
-    background: var(--border);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .load-bar-fill {
-    height: 100%;
-    background: var(--accent);
-    width: 0%;
-    animation: load 1.2s ease forwards;
-  }
-
-  @keyframes load {
-    0% { width: 0%; }
-    60% { width: 75%; }
-    100% { width: 100%; }
-  }
-
-  /* Scrollbar */
+  .load-title { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--accent); }
+  .load-sub { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .load-bar { width: 200px; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+  .load-bar-fill { height: 100%; background: var(--accent); width: 0%; animation: load 1.2s ease forwards; }
+  @keyframes load { 0% { width: 0%; } 60% { width: 75%; } 100% { width: 100%; } }
   #rankings::-webkit-scrollbar { width: 4px; }
   #rankings::-webkit-scrollbar-track { background: transparent; }
   #rankings::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
@@ -469,22 +93,18 @@
 </head>
 <body>
 
-<!-- Loading screen -->
 <div id="loading">
   <div class="load-title">SF Student Housing</div>
   <div class="load-sub">Loading neighborhood data</div>
   <div class="load-bar"><div class="load-bar-fill"></div></div>
 </div>
 
-<!-- Sidebar -->
 <div id="sidebar">
   <div id="sidebar-header">
     <div class="logo-line">SF Student Housing</div>
     <div class="sub-line">Neighborhood Explorer · 41 neighborhoods</div>
   </div>
-
   <div id="controls">
-    <!-- School selector -->
     <div class="control-group">
       <label>Your School</label>
       <select id="school-select">
@@ -494,8 +114,15 @@
         <option value="ucsf_missionbay">UCSF — Mission Bay</option>
       </select>
     </div>
-
-    <!-- Sliders -->
+    <div class="control-group">
+      <label>Commute Mode</label>
+      <select id="mode-select">
+        <option value="transit">🚌 Transit</option>
+        <option value="drive">🚗 Drive</option>
+        <option value="walk">🚶 Walk</option>
+        <option value="cycle">🚲 Cycle</option>
+      </select>
+    </div>
     <div class="control-group">
       <label>Priorities</label>
       <div class="slider-row">
@@ -520,8 +147,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Rankings -->
   <div id="rankings-header">
     <span>Ranked Neighborhoods</span>
     <span class="count">41 total</span>
@@ -529,7 +154,6 @@
   <div id="rankings"></div>
 </div>
 
-<!-- Map -->
 <div id="map-container">
   <div id="map"></div>
   <div id="legend">
@@ -537,290 +161,174 @@
     <div class="leg-bar"></div>
     <div class="leg-labels">
       <span style="color:var(--accent)">Best</span>
-      <span>Worst</span>
+      <span style="color:var(--muted)">Worst</span>
     </div>
   </div>
 </div>
 
 <script>
-// ── CONFIG ──────────────────────────────────────────────────────────────────
 const GEOJSON_URL = 'neighborhoods_geo_scored.geojson';
 
-const SCHOOL_TRANSIT_COL = {
-  usfca:           'transit_min_usfca_score',
-  sfsu:            'transit_min_sfsu_score',
-  ucsf_parnassus:  'transit_min_ucsf_parnassus_score',
-  ucsf_missionbay: 'transit_min_ucsf_missionbay_score',
+const SCHOOL_INFO = {
+  usfca:           { lat: 37.7765, lng: -122.4506, label: 'USFCA' },
+  sfsu:            { lat: 37.7245, lng: -122.4786, label: 'SFSU' },
+  ucsf_parnassus:  { lat: 37.7631, lng: -122.4584, label: 'UCSF Parnassus' },
+  ucsf_missionbay: { lat: 37.7631, lng: -122.3920, label: 'UCSF Mission Bay' },
 };
 
-const SCHOOL_TRANSIT_MIN = {
-  usfca:           'transit_min_usfca',
-  sfsu:            'transit_min_sfsu',
-  ucsf_parnassus:  'transit_min_ucsf_parnassus',
-  ucsf_missionbay: 'transit_min_ucsf_missionbay',
-};
+function getScoreCol(school, mode) {
+  return mode === 'transit' ? `transit_min_${school}_score` : `${mode}_min_${school}_score`;
+}
+function getMinCol(school, mode) {
+  return mode === 'transit' ? `transit_min_${school}` : `${mode}_min_${school}`;
+}
 
-const SCORE_COLORS = [
-  '#1a4a1a','#2d6e2d','#4a9e2a','#7ec832','#c8f060',
-  '#f0d860','#f0a840','#f07030','#e04020','#b01010'
-];
+const SCORE_COLORS = ['#1a5c1a','#2d8a2d','#4ab040','#7ec832','#c8f060','#f0d840','#f0a830','#f07020','#e03010','#b00808'];
+const MODE_EMOJI = { transit:'🚌', drive:'🚗', walk:'🚶', cycle:'🚲' };
 
-// ── STATE ───────────────────────────────────────────────────────────────────
-let geoData = null;
-let map = null;
-let geojsonLayer = null;
-let selectedNhood = null;
+let geoData = null, map = null, geojsonLayer = null, schoolMarker = null, selectedNhood = null;
+let school = 'usfca', mode = 'transit', rentW = 0.5, commuteW = 0.5;
 
-let school    = 'usfca';
-let rentW     = 0.5;
-let commuteW  = 0.5;
-
-// ── INIT MAP ─────────────────────────────────────────────────────────────────
-map = L.map('map', {
-  center: [37.757, -122.443],
-  zoom: 13,
-  zoomControl: false,
-  attributionControl: false,
-});
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 18,
-}).addTo(map);
-
+map = L.map('map', { center: [37.757, -122.443], zoom: 13, zoomControl: false, attributionControl: false });
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
 L.control.zoom({ position: 'topright' }).addTo(map);
 
-// ── SCORING ──────────────────────────────────────────────────────────────────
 function computeScore(props) {
-  const r = parseFloat(props.rent_score)     || 0;
-  const c = parseFloat(props[SCHOOL_TRANSIT_COL[school]]) || 0;
+  const r = parseFloat(props.rent_score) || 0;
+  const c = parseFloat(props[getScoreCol(school, mode)]) || 0;
   return rentW * r + commuteW * c;
 }
+function scoreColor(s) { return SCORE_COLORS[Math.min(9, Math.floor(s * 10))]; }
 
-function scoreColor(score) {
-  // score 0–1, lower = better = darker green
-  const idx = Math.min(9, Math.floor(score * 10));
-  return SCORE_COLORS[idx];
+function updateSchoolMarker() {
+  if (schoolMarker) map.removeLayer(schoolMarker);
+  const info = SCHOOL_INFO[school];
+  schoolMarker = L.marker([info.lat, info.lng], {
+    icon: L.divIcon({
+      className: '',
+      html: `<div style="background:#2d7a3a;border:3px solid white;border-radius:50%;width:18px;height:18px;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>`,
+      iconSize: [18, 18], iconAnchor: [9, 9],
+    })
+  }).addTo(map);
+  schoolMarker.bindTooltip(
+    `<span class="school-tip-label">${info.label}</span>`,
+    { permanent: true, direction: 'top', offset: [0, -12], className: '' }
+  ).openTooltip();
 }
 
-// ── RENDER MAP ───────────────────────────────────────────────────────────────
 function renderMap() {
   if (!geoData) return;
-
   if (geojsonLayer) map.removeLayer(geojsonLayer);
-
   geojsonLayer = L.geoJSON(geoData, {
     style: feature => {
       const score = computeScore(feature.properties);
-      const isSelected = feature.properties.nhood === selectedNhood;
-      return {
-        fillColor: scoreColor(score),
-        fillOpacity: isSelected ? 0.95 : 0.75,
-        color: isSelected ? '#c8f060' : '#1a1a25',
-        weight: isSelected ? 2.5 : 0.8,
-      };
+      const sel = feature.properties.nhood === selectedNhood;
+      return { fillColor: scoreColor(score), fillOpacity: sel ? 0.92 : 0.70, color: sel ? '#2d7a3a' : '#b0b8c8', weight: sel ? 2.5 : 0.8 };
     },
     onEachFeature: (feature, layer) => {
       const p = feature.properties;
-      const score = computeScore(p);
-      const transitMin = parseFloat(p[SCHOOL_TRANSIT_MIN[school]]) || 0;
       const rent = parseFloat(p.median_rent_neighborhood) || 0;
-
-      layer.bindTooltip(
-        `<strong>${p.nhood}</strong><br>` +
-        `Rent: $${rent.toLocaleString()}/mo · Transit: ${transitMin} min`,
-        { sticky: true, direction: 'top', offset: [0, -4] }
-      );
-
-      layer.on('click', () => {
-        selectedNhood = p.nhood;
-        showPopup(layer, p, score);
-        renderMap();
-        renderRankings();
-        highlightCard(p.nhood);
-      });
-
-      layer.on('mouseover', () => {
-        if (p.nhood !== selectedNhood) {
-          layer.setStyle({ fillOpacity: 0.9, weight: 1.5, color: '#888' });
-        }
-      });
-
-      layer.on('mouseout', () => {
-        if (p.nhood !== selectedNhood) {
-          layer.setStyle({ fillOpacity: 0.75, weight: 0.8, color: '#1a1a25' });
-        }
-      });
+      const cm = parseFloat(p[getMinCol(school, mode)]) || 0;
+      layer.bindTooltip(`<strong>${p.nhood}</strong><br>Rent: $${rent.toLocaleString()}/mo · ${MODE_EMOJI[mode]} ${cm} min`, { sticky: true, direction: 'top', offset: [0,-4] });
+      layer.on('click', () => { selectedNhood = p.nhood; showPopup(layer, p); renderMap(); renderRankings(); highlightCard(p.nhood); });
+      layer.on('mouseover', () => { if (p.nhood !== selectedNhood) layer.setStyle({ fillOpacity: 0.88, weight: 1.5, color: '#6a7a8a' }); });
+      layer.on('mouseout',  () => { if (p.nhood !== selectedNhood) layer.setStyle({ fillOpacity: 0.70, weight: 0.8, color: '#b0b8c8' }); });
     }
   }).addTo(map);
+  updateSchoolMarker();
 }
 
-// ── POPUP ────────────────────────────────────────────────────────────────────
-function showPopup(layer, p, score) {
-  const transitMin = parseFloat(p[SCHOOL_TRANSIT_MIN[school]]) || 0;
+function showPopup(layer, p) {
   const rent = parseFloat(p.median_rent_neighborhood) || 0;
-  const ranked = getRanked();
-  const rank = ranked.findIndex(r => r.nhood === p.nhood) + 1;
-
-  const html = `
+  const cm = parseFloat(p[getMinCol(school, mode)]) || 0;
+  const cs = (parseFloat(p[getScoreCol(school, mode)]) || 0) * 100;
+  const rank = getRanked().findIndex(r => r.nhood === p.nhood) + 1;
+  layer.unbindPopup();
+  layer.bindPopup(`
     <div class="popup-inner">
       <div class="popup-name">${p.nhood}</div>
       <div class="popup-grid">
-        <div class="popup-stat">
-          <div class="popup-stat-label">Median Rent</div>
-          <div class="popup-stat-val highlight">$${rent.toLocaleString()}<span style="font-size:10px;color:var(--muted)">/mo</span></div>
-        </div>
-        <div class="popup-stat">
-          <div class="popup-stat-label">Transit Time</div>
-          <div class="popup-stat-val">${transitMin} <span style="font-size:10px;color:var(--muted)">min</span></div>
-        </div>
-        <div class="popup-stat">
-          <div class="popup-stat-label">Rent Score</div>
-          <div class="popup-stat-val">${(parseFloat(p.rent_score)*100).toFixed(0)}<span style="font-size:10px;color:var(--muted)">/100</span></div>
-        </div>
-        <div class="popup-stat">
-          <div class="popup-stat-label">Commute Score</div>
-          <div class="popup-stat-val">${(parseFloat(p[SCHOOL_TRANSIT_COL[school]])*100).toFixed(0)}<span style="font-size:10px;color:var(--muted)">/100</span></div>
-        </div>
+        <div class="popup-stat"><div class="popup-stat-label">Median Rent</div><div class="popup-stat-val highlight">$${rent.toLocaleString()}<span style="font-size:10px;color:var(--muted)">/mo</span></div></div>
+        <div class="popup-stat"><div class="popup-stat-label">${MODE_EMOJI[mode]} Commute</div><div class="popup-stat-val">${cm} <span style="font-size:10px;color:var(--muted)">min</span></div></div>
+        <div class="popup-stat"><div class="popup-stat-label">Rent Score</div><div class="popup-stat-val">${(parseFloat(p.rent_score)*100).toFixed(0)}<span style="font-size:10px;color:var(--muted)">/100</span></div></div>
+        <div class="popup-stat"><div class="popup-stat-label">Commute Score</div><div class="popup-stat-val">${cs.toFixed(0)}<span style="font-size:10px;color:var(--muted)">/100</span></div></div>
       </div>
-      <div class="popup-rank">
-        <span>Rank with your settings</span>
-        <span>#${rank} of 41</span>
-      </div>
-    </div>
-  `;
-
-  layer.unbindPopup();
-  layer.bindPopup(html, { maxWidth: 280, className: '' }).openPopup();
+      <div class="popup-rank"><span>Rank with your settings</span><span>#${rank} of 41</span></div>
+    </div>`, { maxWidth: 280 }).openPopup();
 }
 
-// ── RANKINGS ─────────────────────────────────────────────────────────────────
 function getRanked() {
   if (!geoData) return [];
-  return geoData.features
-    .map(f => ({ ...f.properties, _score: computeScore(f.properties) }))
-    .sort((a, b) => a._score - b._score);
+  return geoData.features.map(f => ({ ...f.properties, _score: computeScore(f.properties) })).sort((a,b) => a._score - b._score);
 }
 
 function renderRankings() {
   const ranked = getRanked();
   const container = document.getElementById('rankings');
   container.innerHTML = '';
-
   ranked.forEach((p, i) => {
-    const score = p._score;
-    const color = scoreColor(score);
     const rent = parseFloat(p.median_rent_neighborhood) || 0;
-    const transit = parseFloat(p[SCHOOL_TRANSIT_MIN[school]]) || 0;
-    const isActive = p.nhood === selectedNhood;
-
+    const cm = parseFloat(p[getMinCol(school, mode)]) || 0;
     const card = document.createElement('div');
-    card.className = 'rank-card' + (isActive ? ' active' : '');
+    card.className = 'rank-card' + (p.nhood === selectedNhood ? ' active' : '');
     card.dataset.nhood = p.nhood;
     card.innerHTML = `
       <span class="rank-num">${i+1}</span>
-      <span class="rank-dot" style="background:${color}"></span>
+      <span class="rank-dot" style="background:${scoreColor(p._score)}"></span>
       <div class="rank-info">
         <div class="rank-name">${p.nhood}</div>
-        <div class="rank-meta">$${rent.toLocaleString()} · ${transit} min transit</div>
+        <div class="rank-meta">$${rent.toLocaleString()} · ${MODE_EMOJI[mode]} ${cm} min</div>
       </div>
-      <div class="rank-score">${(score * 100).toFixed(0)}</div>
-    `;
-
+      <div class="rank-score">${(p._score*100).toFixed(0)}</div>`;
     card.addEventListener('click', () => {
-      selectedNhood = p.nhood;
-      renderMap();
-      renderRankings();
-      // fly to neighborhood centroid
-      const lat = parseFloat(p.lat);
-      const lng = parseFloat(p.lng);
-      if (!isNaN(lat) && !isNaN(lng)) {
-        map.flyTo([lat, lng], 14, { duration: 0.8 });
-      }
-      // open popup on the layer
-      geojsonLayer.eachLayer(layer => {
-        if (layer.feature && layer.feature.properties.nhood === p.nhood) {
-          const s = computeScore(layer.feature.properties);
-          showPopup(layer, layer.feature.properties, s);
-        }
-      });
+      selectedNhood = p.nhood; renderMap(); renderRankings();
+      const lat = parseFloat(p.lat), lng = parseFloat(p.lng);
+      if (!isNaN(lat) && !isNaN(lng)) map.flyTo([lat, lng], 14, { duration: 0.8 });
+      geojsonLayer.eachLayer(l => { if (l.feature && l.feature.properties.nhood === p.nhood) showPopup(l, l.feature.properties); });
     });
-
     container.appendChild(card);
   });
 }
 
 function highlightCard(nhood) {
-  document.querySelectorAll('.rank-card').forEach(c => {
-    c.classList.toggle('active', c.dataset.nhood === nhood);
-  });
-  const active = document.querySelector(`.rank-card[data-nhood="${CSS.escape(nhood)}"]`);
-  if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  document.querySelectorAll('.rank-card').forEach(c => c.classList.toggle('active', c.dataset.nhood === nhood));
+  const a = document.querySelector(`.rank-card[data-nhood="${CSS.escape(nhood)}"]`);
+  if (a) a.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ── CONTROLS ──────────────────────────────────────────────────────────────────
-const rentSlider    = document.getElementById('rent-slider');
+const rentSlider = document.getElementById('rent-slider');
 const commuteSlider = document.getElementById('commute-slider');
-const rentVal       = document.getElementById('rent-val');
-const commuteVal    = document.getElementById('commute-val');
-const weightBarRent = document.getElementById('weight-bar-rent');
 let isUpdatingSlider = false;
 
-function updateSliders(changedSlider) {
+function updateSliders(changed) {
   if (isUpdatingSlider) return;
   isUpdatingSlider = true;
-
-  let rv = parseInt(rentSlider.value);
-  let cv = parseInt(commuteSlider.value);
-
-  if (changedSlider === 'rent') {
-    cv = 100 - rv;
-    commuteSlider.value = cv;
-  } else {
-    rv = 100 - cv;
-    rentSlider.value = rv;
-  }
-
-  rentW    = rv / 100;
-  commuteW = cv / 100;
-
-  rentVal.textContent    = rv + '%';
-  commuteVal.textContent = cv + '%';
-  weightBarRent.style.width = rv + '%';
-
+  let rv = parseInt(rentSlider.value), cv = parseInt(commuteSlider.value);
+  if (changed === 'rent') { cv = 100-rv; commuteSlider.value = cv; } else { rv = 100-cv; rentSlider.value = rv; }
+  rentW = rv/100; commuteW = cv/100;
+  document.getElementById('rent-val').textContent = rv+'%';
+  document.getElementById('commute-val').textContent = cv+'%';
+  document.getElementById('weight-bar-rent').style.width = rv+'%';
   isUpdatingSlider = false;
-  renderMap();
-  renderRankings();
+  renderMap(); renderRankings();
 }
 
-rentSlider.addEventListener('input',    () => updateSliders('rent'));
+rentSlider.addEventListener('input', () => updateSliders('rent'));
 commuteSlider.addEventListener('input', () => updateSliders('commute'));
+document.getElementById('school-select').addEventListener('change', e => { school = e.target.value; renderMap(); renderRankings(); });
+document.getElementById('mode-select').addEventListener('change', e => { mode = e.target.value; renderMap(); renderRankings(); });
 
-document.getElementById('school-select').addEventListener('change', e => {
-  school = e.target.value;
-  renderMap();
-  renderRankings();
-});
-
-// ── LOAD DATA ─────────────────────────────────────────────────────────────────
 fetch(GEOJSON_URL)
-  .then(r => {
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.json();
-  })
+  .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
   .then(data => {
-    geoData = data;
-    renderMap();
-    renderRankings();
-    setTimeout(() => {
-      document.getElementById('loading').classList.add('hidden');
-    }, 1200);
+    geoData = data; renderMap(); renderRankings();
+    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 1200);
   })
   .catch(err => {
     document.getElementById('loading').innerHTML = `
       <div class="load-title" style="color:var(--danger)">Failed to load data</div>
       <div class="load-sub">${err.message}</div>
-      <div class="load-sub" style="margin-top:8px">Make sure neighborhoods_geo_scored.geojson is in the same folder</div>
-    `;
+      <div class="load-sub" style="margin-top:8px">Make sure neighborhoods_geo_scored.geojson is in the same folder</div>`;
   });
 </script>
 </body>
